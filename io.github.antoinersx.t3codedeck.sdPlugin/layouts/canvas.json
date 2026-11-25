@@ -1,0 +1,7 @@
+{
+  "$schema": "https://schemas.elgato.com/streamdeck/plugins/layout.json",
+  "id": "io.github.antoinersx.t3codedeck.canvas",
+  "items": [
+    { "key": "full-canvas", "type": "pixmap", "rect": [0, 0, 200, 100], "zOrder": 0 }
+  ]
+}

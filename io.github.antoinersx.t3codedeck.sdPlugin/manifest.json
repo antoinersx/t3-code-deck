@@ -1,0 +1,150 @@
+{
+  "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+  "UUID": "io.github.antoinersx.t3codedeck",
+  "Name": "T3 Code Deck",
+  "Author": "antoinersx",
+  "Description": "Your T3 Code threads on Stream Deck+: pinned and active threads on the keys, and knobs to pick a thread, switch model, set effort and see Claude, Codex and Gemini usage.",
+  "Version": "1.0.0.0",
+  "SDKVersion": 2,
+  "CodePath": "bin/plugin.js",
+  "Nodejs": {
+    "Version": "20"
+  },
+  "Icon": "imgs/plugin",
+  "Category": "T3 Code Deck",
+  "CategoryIcon": "imgs/category",
+  "URL": "https://t3.codes",
+  "Software": {
+    "MinimumVersion": "6.5"
+  },
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "12"
+    }
+  ],
+  "Profiles": [
+    {
+      "Name": "profiles/T3 Code",
+      "DeviceType": 7,
+      "Readonly": false,
+      "DontAutoSwitchWhenInstalled": false
+    }
+  ],
+  "Actions": [
+    {
+      "UUID": "io.github.antoinersx.t3codedeck.thread",
+      "Name": "Thread",
+      "Tooltip": "Shows one T3 Code thread. Top row: your pinned threads. Other rows: active threads, the ones that need you first. Press to open it in T3 Code; hold for a second to stop a working thread.",
+      "Icon": "imgs/act-thread",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/key-thread",
+          "ShowTitle": false
+        }
+      ],
+      "UserTitleEnabled": false,
+      "SupportedInMultiActions": false
+    },
+    {
+      "UUID": "io.github.antoinersx.t3codedeck.threads",
+      "Name": "Threads",
+      "Tooltip": "Turn to select a thread. Press or tap to open it. Hold the strip to pin or unpin it.",
+      "Icon": "imgs/act-threads",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/canvas.json",
+        "Icon": "imgs/act-threads",
+        "TriggerDescription": {
+          "Rotate": "Select a thread",
+          "Push": "Open in T3 Code",
+          "Touch": "Open in T3 Code",
+          "LongTouch": "Pin / unpin"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/key-thread"
+        }
+      ],
+      "SupportedInMultiActions": false
+    },
+    {
+      "UUID": "io.github.antoinersx.t3codedeck.model",
+      "Name": "Model",
+      "Tooltip": "Turn through your favourite models in T3 Code. Press or tap to switch the selected thread to it.",
+      "Icon": "imgs/act-model",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/canvas.json",
+        "Icon": "imgs/act-model",
+        "TriggerDescription": {
+          "Rotate": "Pick a favourite model",
+          "Push": "Switch the thread to it",
+          "Touch": "Switch the thread to it"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/key-thread"
+        }
+      ],
+      "SupportedInMultiActions": false
+    },
+    {
+      "UUID": "io.github.antoinersx.t3codedeck.effort",
+      "Name": "Effort",
+      "Tooltip": "Turn to set the selected thread's effort. Press or tap to turn fast mode on or off.",
+      "Icon": "imgs/act-effort",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/canvas.json",
+        "Icon": "imgs/act-effort",
+        "TriggerDescription": {
+          "Rotate": "Lower / raise effort",
+          "Push": "Fast mode on / off",
+          "Touch": "Fast mode on / off"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/key-thread"
+        }
+      ],
+      "SupportedInMultiActions": false
+    },
+    {
+      "UUID": "io.github.antoinersx.t3codedeck.usage",
+      "Name": "Usage",
+      "Tooltip": "How much of your Claude, Codex and Gemini limits is left. Turn for each provider's details. Press or tap to refresh.",
+      "Icon": "imgs/act-usage",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/canvas.json",
+        "Icon": "imgs/act-usage",
+        "TriggerDescription": {
+          "Rotate": "Overview / Claude / Codex / Gemini",
+          "Push": "Refresh",
+          "Touch": "Refresh"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/key-thread"
+        }
+      ],
+      "SupportedInMultiActions": false
+    }
+  ]
+}
