@@ -23,14 +23,6 @@
       "MinimumVersion": "12"
     }
   ],
-  "Profiles": [
-    {
-      "Name": "profiles/T3 Code",
-      "DeviceType": 7,
-      "Readonly": false,
-      "DontAutoSwitchWhenInstalled": false
-    }
-  ],
   "Actions": [
     {
       "UUID": "io.github.antoinersx.t3codedeck.thread",

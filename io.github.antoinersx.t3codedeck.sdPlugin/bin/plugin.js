@@ -1,7 +1,7 @@
 // T3 Code Deck: your T3 Code threads, models and usage on a Stream Deck+.
 // Raw Stream Deck SDK v2 protocol, plain Node, one dependency (ws). No build step.
 //
-// Layout (from the bundled profile; keys place themselves by position):
+// Layout (add a page to any profile and drop the actions in; keys place themselves by position):
 //   top row    : your pinned threads (T3 Code's own pins)
 //   bottom row : other active threads, the ones that need you first
 //   knob 1     : threads   turn = select, press/tap = open, hold strip = pin/unpin
@@ -65,6 +65,13 @@ function draw(context, image) {
   if (c.action === A.thread) send({ event: "setImage", context, payload: { image: R.dataUrl(image), target: 0 } });
   else send({ event: "setFeedback", context, payload: { "full-canvas": R.dataUrl(image) } });
 }
+
+/** Forget what was sent and draw everything again (after a replug, a wake, and once a minute as a safety net). */
+function repaint() {
+  lastDrawn.clear();
+  render();
+}
+setInterval(repaint, 60_000);
 
 // ---------- state ----------
 
@@ -576,42 +583,17 @@ sd.on("message", (raw) => {
       onPress(action, !!payload.hold);
       break;
     case "deviceDidConnect":
-      maybeOfferProfile(m.device, m.deviceInfo);
+      repaint(); // a replugged deck comes back blank; send every key and panel again
       break;
     case "systemDidWakeUp":
+      repaint();
       pollThreads();
       pollUsage();
       break;
   }
 });
 
-// Offer the bundled "T3 Code" profile once per Stream Deck+, so the keys and knobs are laid out for you.
-const offered = new Set();
-function maybeOfferProfile(device, deviceInfo) {
-  if (!device || offered.has(device)) return;
-  if (fs.existsSync(path.join(STORE_DIR, "dev-no-profile"))) return; // set while testing a linked dev copy
-  if (deviceInfo && deviceInfo.type !== 7) return; // 7 = Stream Deck+
-  offered.add(device);
-  const store = loadStore();
-  store.profileOffered = store.profileOffered || {};
-  if (store.profileOffered[device]) return;
-  store.profileOffered[device] = true;
-  saveStore(store);
-  send({ event: "switchToProfile", context: arg("-pluginUUID"), device, payload: { profile: "profiles/T3 Code" } });
-}
-
 // ---------- loops ----------
-
-const devices = (() => {
-  try {
-    return JSON.parse(arg("-info")).devices || [];
-  } catch {
-    return [];
-  }
-})();
-sd.on("open", () => {
-  for (const d of devices) if (d.type === 7) maybeOfferProfile(d.id, d);
-});
 
 pollFavorites();
 pollProjects().then(pollThreads);
@@ -622,4 +604,8 @@ setInterval(pollUsage, USAGE_MS);
 setInterval(pollFavorites, 15000);
 setInterval(() => S.selectedId && S.pendingEffort === undefined && refreshCfg(), 10000);
 setInterval(render, 30000); // keeps "12m" ages fresh
+let devices = [];
+try {
+  devices = JSON.parse(arg("-info")).devices || [];
+} catch {}
 log("started", { devices: devices.map((d) => d.type) });

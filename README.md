@@ -9,8 +9,9 @@ Not affiliated with T3 Code or Elgato.
 ## Install
 
 1. Download `io.github.antoinersx.t3codedeck.streamDeckPlugin` from [Releases](../../releases) and double-click it.
-2. Stream Deck offers a **T3 Code** profile with every key and knob already placed. Accept it.
-3. Keep T3 Code open. The plugin signs itself in the first time and shows up as "T3 Code Deck" in T3's sessions.
+2. In the Stream Deck app, add a new page to the profile you already use (it sits next to your other pages, so you keep them).
+3. From the **T3 Code Deck** category, drag **Thread** onto all 8 keys and **Threads**, **Model**, **Effort**, **Usage** onto the 4 knobs, left to right. Knob actions show in the list when a knob slot is selected. The keys sort themselves by position: top row pinned, bottom row live.
+4. Keep T3 Code open. The plugin signs itself in the first time and shows up as "T3 Code Deck" in T3's sessions.
 
 Needs macOS 12+, Stream Deck 6.5+ and a Stream Deck+ (8 keys, 4 knobs, touch strip). The actions also work on other Stream Decks if you place them by hand.
 
@@ -47,15 +48,13 @@ Tokens are stored in `~/Library/Application Support/T3 Code Deck/auth.json` (mod
 cd io.github.antoinersx.t3codedeck.sdPlugin/bin && npm install   # ws
 node ../../tools/preview.js        # renders every key and strip state to preview.html
 python3 tools/make_icons.py        # PNG icons (needs Pillow)
-python3 tools/make_profile.py      # the bundled Stream Deck+ profile
 streamdeck validate io.github.antoinersx.t3codedeck.sdPlugin
 streamdeck pack io.github.antoinersx.t3codedeck.sdPlugin -o dist --force
 ```
 
-To try a linked copy without the profile prompt:
+To try a linked copy:
 
 ```sh
-touch ~/Library/Application\ Support/T3\ Code\ Deck/dev-no-profile
 streamdeck link io.github.antoinersx.t3codedeck.sdPlugin
 ```
 
